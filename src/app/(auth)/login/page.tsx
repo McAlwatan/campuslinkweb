@@ -149,6 +149,7 @@ import { Bricolage_Grotesque, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font
 import { Eye, EyeOff, Lock, Mail, ShieldCheck, BadgeCheck, Sparkles, Tag } from "lucide-react";
 import api from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
+import Loader1 from "@/components/landing/Loader";
 
 /**
  * Same palette as the CampusLink landing page:
@@ -332,9 +333,11 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-md">
         {/* wordmark */}
         <div className="mb-7 flex items-center justify-center gap-2.5">
-          <span className="font-display text-2xl font-bold">
-            Campus<span className="text-[#F0B429]">Link</span>.
-          </span>
+          <Link href="/" className="flex items-center gap-2.5">
+            <span className="font-display text-2xl font-bold">
+                Campus<span className="text-[#F0B429]">Link</span>.
+            </span>
+          </Link>
         </div>
 
         {/* card */}
@@ -429,7 +432,7 @@ export default function LoginPage() {
                 disabled={loading}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#10201A] py-3.5 text-sm font-semibold text-[#F5F1E4] transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:opacity-60 disabled:hover:translate-y-0 dark:bg-[#F0B429] dark:text-[#10201A]"
               >
-                {loading ? "Signing in…" : "Sign in"}
+                {loading ? <Loader1 size={80} color="#F0B429" /> : "Sign in"}
               </button>
             </form>
 

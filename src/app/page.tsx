@@ -1,481 +1,17 @@
-// import Link from "next/link";
-// import Image from "next/image";
-// import {
-//   MessageCircle,
-//   UsersRound,
-//   FileText,
-//   ShoppingBag,
-//   Award,
-//   ShieldCheck,
-//   MessageSquareMore,
-//   TrendingUp,
-//   Files,
-//   Tag,
-//   Lock,
-//   Shield,
-//   Heart,
-//   Star,
-//   Plus,
-//   Play,
-//   PlusCircle,
-//   PlusCircleIcon,
-//   PlusIcon,
-// } from "lucide-react";
-
-// const stats = [
-//   { num: "2+", label: "Active students" },
-//   { num: "0+", label: "Universities" },
-//   { num: "0%", label: "Satisfaction rate" },
-//   { num: "0+", label: "Messages sent" },
-// ];
-
-// const features = [
-//   {
-//     icon: MessageCircle,
-//     title: "Campus chat",
-//     desc: "Real-time messaging for classmates, departments, and study groups with file sharing built in.",
-//   },
-//   {
-//     icon: UsersRound,
-//     title: "Groups",
-//     desc: "Create and discover groups by course, club, faculty, or interest across your university.",
-//   },
-//   {
-//     icon: FileText,
-//     title: "Documents",
-//     desc: "Share notes, past papers, and resources. Everything is searchable and organized by subject.",
-//   },
-//   {
-//     icon: ShoppingBag,
-//     title: "Marketplace",
-//     desc: "Buy, sell, and swap textbooks, equipment, and services with verified students only.",
-//   },
-//   {
-//     icon: Award,
-//     title: "Skills",
-//     desc: "Build a campus portfolio and connect with peers whose expertise complements yours.",
-//   },
-//   {
-//     icon: ShieldCheck,
-//     title: "Verified community",
-//     desc: "Every account is tied to a real university identity. A trusted space, by design.",
-//   },
-// ];
-
-// const steps = [
-//   {
-//     num: "1",
-//     title: "Sign up with your university email",
-//     desc: "Use your institutional email address to verify your student identity. Takes under 60 seconds.",
-//   },
-//   {
-//     num: "2",
-//     title: "Join your campus community",
-//     desc: "Your university, faculty, and year group are automatically suggested. Join groups that match your interests.",
-//   },
-//   {
-//     num: "3",
-//     title: "Connect, share, and thrive",
-//     desc: "Chat, access documents, trade in the marketplace, and build your campus network from day one.",
-//   },
-// ];
-
-// const testimonials = [
-//   {
-//     quote:
-//       "Found my entire study group for final exams in one afternoon. We shared notes and past papers all in the same place.",
-//     name: "Amina Mwangi",
-//     role: "2nd year, Computer Science",
-//     initials: "AM",
-//   },
-//   {
-//     quote:
-//       "Sold my first-year textbooks and bought all my second-year ones through the marketplace. Saved so much money.",
-//     name: "Joseph Kiprotich",
-//     role: "3rd year, Business Admin",
-//     initials: "JK",
-//   },
-//   {
-//     quote:
-//       "The skills section helped me find a partner for my final project who knew exactly what I needed. Game changer.",
-//     name: "Fatuma Omar",
-//     role: "Final year, Engineering",
-//     initials: "FO",
-//   },
-// ];
-
-// const docs = [
-//   { name: "STAT 201 Past Paper 2023.pdf", icon: FileText },
-//   { name: "Organic Chemistry Notes.docx", icon: FileText },
-//   { name: "Macroeconomics Week 7.pptx", icon: FileText },
-//   { name: "Law of Torts Summary.pdf", icon: FileText },
-// ];
-
-// export default function LandingPage() {
-//   return (
-//     <main className="min-h-screen bg-[#0c0b18] text-white font-sans overflow-x-hidden">
-
-//       {/* Nav */}
-//       <nav className="flex items-center justify-between px-10 py-5 border-b border-white/5 animate-fade-in">
-//         <div className="flex items-center gap-2">
-//           {/* <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-//             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-//               <path d="M8 2L14 5.5V10.5L8 14L2 10.5V5.5L8 2Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
-//               <circle cx="8" cy="8" r="2" fill="white" />
-//             </svg>
-//           </div> */}
-//           <span className="text-base md:text-[20px] sm:text-sm font-medium">
-//             Campus<span className="text-primary">Link</span>.
-//           </span>
-//         </div>
-//         <div className="hidden md:flex items-center gap-7">
-//           {["Features", "How it works", "Community", "About"].map((l) => (
-//             <a key={l} href={`#${l.toLowerCase().replace(" ", "-")}`} className="text-sm text-white/50 hover:text-white transition-colors">
-//               {l}
-//             </a>
-//           ))}
-//         </div>
-//         <div className="flex items-center gap-2.5">
-//           <Link href="/login" className="text-sm text-white/60 border border-white/15 rounded-lg px-4 py-1.5 hover:bg-white/5 hover:text-white transition-all">
-//             Sign in
-//           </Link>
-//           <Link href="/register" className="text-sm text-white bg-primary rounded-lg px-4 py-1.5 hover:opacity-85 transition-opacity">
-//             Get started
-//           </Link>
-//         </div>
-//       </nav>
-
-//       {/* Hero */}
-//       <section id="features" className="relative px-10 pt-20 pb-0 text-center overflow-hidden">
-//         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[320px] bg-primary/20 rounded-full blur-[80px] pointer-events-none animate-pulse" />
-
-//         <p className="text-[13px] text-white/30 font-medium mb-3 animate-fade-up animation-delay-200">
-//           The campus platform students actually use
-//         </p>
-//         <h1 className="text-8xl md:text-[120px] font-medium leading-[1.0] tracking-tight mb-5 animate-fade-up animation-delay-150 mb-20">
-//           <span
-//             style={{
-//               background: "linear-gradient(90deg, #1a1030 0%, #ffffff 40%, #ffffff 60%, #1a1030 100%)",
-//               WebkitBackgroundClip: "text",
-//               WebkitTextFillColor: "transparent",
-//               backgroundClip: "text",
-//             }}
-//           >
-//             Campus<span className="text-primary">Link</span>.
-//           </span>
-//         </h1>
-
-        
-
-//         <div className="flex items-center justify-center gap-3 mb-4 animate-fade-up animation-delay-450">
-//           <Link
-//             href="/register"
-//             className="inline-flex items-center gap-2 text-sm font-medium text-white bg-primary rounded-xl px-7 py-3.5 hover:opacity-85 hover:-translate-y-0.5 transition-all"
-//           >
-//             <Plus size={16} />
-//             Create free account
-//           </Link>
-//           <button className="inline-flex items-center gap-2 text-sm text-white/55 border border-white/15 rounded-xl px-6 py-3.5 hover:bg-white/5 hover:text-white transition-all">
-//             <Play size={14} />
-//             Watch demo
-//           </button>
-//         </div>
-//         <p className="text-xs text-white/20 mb-14 animate-fade-up animation-delay-450">
-//           No credit card required. Free for all students.
-//         </p>
-
-//         {/* Dashboard snapshot */}
-//         <div className="relative max-w-4xl mx-auto animate-fade-up animation-delay-600">
-//           <div className="animate-float rounded-2xl rounded-b-none border border-white/10 bg-white/[0.03] overflow-hidden">
-//             <div className="flex items-center gap-2.5 px-4 py-2.5 bg-white/[0.04] border-b border-white/[0.06]">
-//               <div className="flex gap-1.5">
-//                 <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-//                 <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-//                 <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
-//               </div>
-//               <span className="flex-1 text-center text-[11px] text-white/20">
-//                 app.campuslink.co.tz/dashboard
-//               </span>
-//             </div>
-//             {/* ↓ Replace this div with your actual screenshot */}
-//             <div className="min-h-[340px] flex flex-col items-center justify-center gap-3 border-2 border-dashed border-primary/20 bg-primary/[0.03]">
-//               {/* <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/25 flex items-center justify-center">
-//                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-//                   <rect x="2" y="2" width="7" height="7" rx="2" stroke="#6d5dff" strokeWidth="1.5" />
-//                   <rect x="13" y="2" width="7" height="7" rx="2" stroke="#6d5dff" strokeWidth="1.5" />
-//                   <rect x="2" y="13" width="18" height="7" rx="2" stroke="#6d5dff" strokeWidth="1.5" />
-//                 </svg>
-//               </div> */}
-//               {/* <p className="text-sm text-white/25">Place your dashboard screenshot here</p>
-//               <code className="text-xs text-primary/50 font-mono"> */}
-//                 <Image src="/dashboard.png" alt="dashboard" width={1200} height={700}  loading="eager"/>
-//               {/* </code> */}
-//             </div>
-//           </div>
-//           <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[600px] h-24 bg-primary/25 rounded-full blur-[60px] pointer-events-none" />
-//         </div>
-//       </section>
-
-//       {/* Stats */}
-//       <div className="grid grid-cols-4 border-y border-white/[0.06] mt-10">
-//         {stats.map((s) => {
-//           const match = s.num.match(/^(\d+)(.+)$/);
-//           const number = match?.[1] ?? s.num;
-//           const suffix = match?.[2] ?? "";
-//           return (
-//             <div key={s.label} className="py-9 text-center border-r border-white/[0.06] last:border-r-0">
-//               <p className="text-3xl font-medium text-white mb-1">
-//                 {number}<span className="text-primary">{suffix}</span>
-//               </p>
-//               <p className="text-xs text-white/35 tracking-wide">{s.label}</p>
-//             </div>
-//           );
-//         })}
-//       </div>
-
-//       {/* Features */}
-//       <section className="px-10 py-24">
-//         <p className="text-[11px] font-medium tracking-[1.4px] text-primary uppercase text-center mb-3">Features</p>
-//         <h2 className="text-4xl font-medium text-center text-white mb-3 tracking-tight">Everything campus life needs</h2>
-//         <p className="text-[15px] text-white/40 text-center max-w-md mx-auto mb-16 leading-relaxed">
-//           Six core tools built around how students actually live and study.
-//         </p>
-//         <div className="grid grid-cols-3 max-w-4xl mx-auto border border-white/[0.07] rounded-2xl overflow-hidden divide-x divide-y divide-white/[0.07]">
-//           {features.map(({ icon: Icon, title, desc }) => (
-//             <div key={title} className="p-7 bg-[#0c0b18] hover:bg-[#110f22] transition-colors group">
-//               <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/25 flex items-center justify-center mb-4 group-hover:bg-primary/15 transition-colors">
-//                 <Icon size={18} className="text-primary" />
-//               </div>
-//               <p className="text-sm font-medium text-white mb-1.5">{title}</p>
-//               <p className="text-[13px] text-white/38 leading-relaxed">{desc}</p>
-//             </div>
-//           ))}
-//         </div>
-//       </section>
-
-//       {/* Bento */}
-//       <section className="px-10 py-24 bg-[#100f1e]">
-//         <p className="text-[11px] font-medium tracking-[1.4px] text-primary uppercase text-center mb-3">A closer look</p>
-//         <h2 className="text-4xl font-medium text-center text-white mb-3 tracking-tight">Designed around student life</h2>
-//         <p className="text-[15px] text-white/40 text-center max-w-md mx-auto mb-16 leading-relaxed">
-//           Every feature is purpose-built for the rhythms of campus — from exam season to the marketplace.
-//         </p>
-//         <div className="grid grid-cols-3 grid-rows-2 gap-3 max-w-4xl mx-auto">
-//           {/* Chat card — wide */}
-//           <div className="col-span-2 bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 hover:border-primary/35 transition-colors">
-//             <MessageSquareMore size={22} className="text-primary mb-3" />
-//             <p className="text-sm font-medium text-white mb-1.5">Study group chat</p>
-//             <p className="text-[12px] text-white/35 leading-relaxed mb-4">
-//               Persistent group threads with file drops, polls, and @mentions. Stay in sync for assignments and exams.
-//             </p>
-//             <div className="flex flex-col gap-2">
-//               {[
-//                 { msg: "Has anyone finished the stats assignment?", out: false },
-//                 { msg: "Almost done — sharing my notes now", out: true },
-//                 { msg: "You're a lifesaver, thank you", out: false },
-//               ].map((b, i) => (
-//                 <div key={i} className={`inline-block self-${b.out ? "end" : "start"} max-w-[75%]`}>
-//                   <span className={`text-[11px] px-3 py-1.5 rounded-xl block ${b.out ? "bg-primary/50 text-white" : "bg-primary/15 text-white/70"}`}>
-//                     {b.msg}
-//                   </span>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//           {/* Skills card — tall */}
-//           <div className="row-span-2 bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 hover:border-primary/35 transition-colors">
-//             <Files size={22} className="text-primary mb-3" />
-//             <p className="text-sm font-medium text-white mb-1.5">Document library</p>
-//             <p className="text-[12px] text-white/35 leading-relaxed mb-4">
-//               Past papers, lecture notes, and study guides — organized, searchable, shared by real students.
-//             </p>
-//             <div className="flex flex-col gap-2">
-//               {docs.map((d) => (
-//                 <div key={d.name} className="flex items-center gap-2 text-[11px] text-white/40 bg-white/[0.03] rounded-lg px-3 py-2">
-//                   <FileText size={13} className="text-primary flex-shrink-0" />
-//                   <span className="truncate">{d.name}</span>
-//                 </div>
-//               ))}
-//             </div>
-//           </div>
-//           {/* Skills */}
-//           <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 hover:border-primary/35 transition-colors">
-//             <TrendingUp size={22} className="text-primary mb-3" />
-//             <p className="text-sm font-medium text-white mb-1.5">Skills profile</p>
-//             <p className="text-[12px] text-white/35 leading-relaxed">
-//               List what you know and what you can offer — visible to your whole campus.
-//             </p>
-//           </div>
-//           {/* Marketplace */}
-//           <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 hover:border-primary/35 transition-colors">
-//             <Tag size={22} className="text-primary mb-3" />
-//             <p className="text-sm font-medium text-white mb-1.5">Student marketplace</p>
-//             <p className="text-[12px] text-white/35 leading-relaxed">
-//               Textbooks, lab coats, laptops — listed by students, bought by students, no middleman.
-//             </p>
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* How it works */}
-//       <section id="how-it-works" className="px-10 py-24 bg-[#0c0b18]">
-//         <p className="text-[11px] font-medium tracking-[1.4px] text-primary uppercase text-center mb-3">How it works</p>
-//         <h2 className="text-4xl font-medium text-center text-white mb-3 tracking-tight">Up and running in minutes</h2>
-//         <p className="text-[15px] text-white/40 text-center max-w-md mx-auto mb-16 leading-relaxed">
-//           Three steps is all it takes to join your campus community.
-//         </p>
-//         <div className="grid grid-cols-3 gap-8 max-w-4xl mx-auto">
-//           {steps.map((s, i) => (
-//             <div key={s.num} className="text-center relative">
-//               {i < steps.length - 1 && (
-//                 <div className="absolute top-6 left-[calc(50%+26px)] right-0 h-px bg-primary/20" />
-//               )}
-//               <div className="w-12 h-12 rounded-full border border-primary/35 bg-primary/10 flex items-center justify-center text-lg font-medium text-primary/80 mx-auto mb-5">
-//                 {s.num}
-//               </div>
-//               <p className="text-sm font-medium text-white mb-2">{s.title}</p>
-//               <p className="text-[13px] text-white/38 leading-relaxed">{s.desc}</p>
-//             </div>
-//           ))}
-//         </div>
-//       </section>
-
-//       {/* Testimonials */}
-//       <section className="px-10 py-20 bg-[#0c0b18] border-t border-white/[0.06]">
-//         <p className="text-[11px] font-medium tracking-[1.4px] text-primary uppercase text-center mb-14">What students say</p>
-//         <div className="grid grid-cols-3 gap-3 max-w-4xl mx-auto">
-//           {testimonials.map((t) => (
-//             <div key={t.name} className="bg-white/[0.03] border border-white/[0.07] rounded-2xl p-5">
-//               <div className="flex gap-0.5 mb-3">
-//                 {[...Array(5)].map((_, i) => <Star key={i} size={13} className="text-amber-400 fill-amber-400" />)}
-//               </div>
-//               <p className="text-[13px] text-white/55 leading-relaxed mb-4">{`"${t.quote}"`}</p>
-//               <div className="flex items-center gap-2.5">
-//                 <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-[11px] font-medium text-primary/90 flex-shrink-0">
-//                   {t.initials}
-//                 </div>
-//                 <div>
-//                   <p className="text-xs font-medium text-white">{t.name}</p>
-//                   <p className="text-[11px] text-white/30">{t.role}</p>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </section>
-
-
-//       {/* Pricing */}
-//       <section className="px-10 py-24 bg-[#0c0b18] border-t border-white/[0.06]">
-//         <p className="text-[11px] font-medium tracking-[1.4px] text-primary uppercase text-center mb-3">Pricing?</p>
-//         <h2 className="text-4xl font-medium text-center text-white mb-3 tracking-tight">
-//           Free. Always!.
-//         </h2>
-//         <p className="text-[15px] text-white/40 text-center max-w-md mx-auto mb-16 leading-relaxed">
-//           CampusLink is built for students, not investors. No trials, no paywalls, no hidden fees.
-//         </p>
-
-//         <div className="max-w-sm mx-auto bg-white/[0.03] border border-primary/25 rounded-3xl p-8">
-//           <div className="flex items-end gap-2 mb-1">
-//             <span className="text-6xl font-medium text-white">0</span>
-//             <span className="text-2xl text-white/40 mb-3">/=</span>
-//             <span className="text-xl text-white/40 mb-3">Tsh</span>
-//           </div>
-//           <p className="text-sm text-white/35 mb-8">per month, forever</p>
-
-//           <div className="flex flex-col gap-3 mb-8">
-//             {[
-//               "Campus chat with file sharing",
-//               "Study groups & communities",
-//               "Document library access",
-//               "Student marketplace",
-//               "Skills profile & discovery",
-//               "University-verified identity",
-//               "Unlimited messages",
-//               "All future features included",
-//             ].map((f) => (
-//               <div key={f} className="flex items-center gap-3">
-//                 <div className="w-5 h-5 rounded-full bg-primary/15 border border-primary/30 flex items-center justify-center flex-shrink-0">
-//                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-//                     <path d="M2 5l2.5 2.5L8 3" stroke="#8b7dff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-//                   </svg>
-//                 </div>
-//                 <span className="text-sm text-white/60">{f}</span>
-//               </div>
-//             ))}
-//           </div>
-
-//           <Link
-//             href="/register"
-//             className="flex items-center justify-center gap-2 w-full text-sm font-medium text-white bg-primary rounded-xl py-3.5 hover:opacity-85 transition-opacity"
-//           >
-//             <PlusIcon size={16} />
-//             Get started for free
-//           </Link>
-//         </div>
-//       </section>
-
-//       {/* CTA */}
-//       <section className="px-10 py-24 bg-[#100f1e]">
-//         <div className="max-w-xl mx-auto text-center bg-primary/[0.08] border border-primary/25 rounded-3xl px-10 py-14">
-//           <h2 className="text-3xl font-medium text-white mb-3 tracking-tight">Join your campus today</h2>
-//           <p className="text-sm text-white/40 mb-8 leading-relaxed">
-//             Thousands of students are already connecting, sharing, and building together on CampusLink. Your community is waiting.
-//           </p>
-//           <div className="flex items-center justify-center gap-3 mb-6">
-//             <Link href="/register" className="inline-flex items-center gap-2 text-sm font-medium text-white bg-primary rounded-xl px-7 py-3.5 hover:opacity-85 transition-opacity">
-//               <Plus size={16} />
-//               Create free account
-//             </Link>
-//             <button className="text-sm text-white/55 border border-white/15 rounded-xl px-5 py-3.5 hover:bg-white/5 hover:text-white transition-all">
-//               Talk to us
-//             </button>
-//           </div>
-//           <div className="flex items-center justify-center gap-6">
-//             {[
-//               { icon: Lock, label: "University-verified" },
-//               { icon: Shield, label: "Private by default" },
-//               { icon: Heart, label: "Free for students" },
-//             ].map(({ icon: Icon, label }) => (
-//               <div key={label} className="flex items-center gap-1.5 text-[12px] text-white/30">
-//                 <Icon size={13} className="text-primary" />
-//                 {label}
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* Footer */}
-//       <footer className="flex items-center justify-between px-10 py-8 border-t border-white/[0.06] bg-[#0c0b18]">
-//         <div className="flex items-center gap-2 text-sm font-medium text-white/35">
-//           {/* <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-//             <path d="M8 2L14 5.5V10.5L8 14L2 10.5V5.5L8 2Z" stroke="#6d5dff" strokeWidth="1.5" strokeLinejoin="round" />
-//             <circle cx="8" cy="8" r="2" fill="#6d5dff" />
-//           </svg> */}
-//           <p>Campus<span className="text-primary">Link</span>.</p>
-//         </div>
-//         <div className="flex gap-5">
-//           {["Privacy", "Terms", "Contact", "About"].map((l) => (
-//             <a key={l} href="#" className="text-xs text-white/25 hover:text-white/50 transition-colors">{l}</a>
-//           ))}
-//         </div>
-//         <p className="text-xs text-white/18">© 2026 CampusLink</p>
-//       </footer>
-
-//     </main>
-//   );
-// }
-
-
-
-
 "use client";
 
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
-import { Bricolage_Grotesque, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { Bricolage_Grotesque, Plus_Jakarta_Sans, IBM_Plex_Mono, Kalam } from "next/font/google";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useInView,
+} from "framer-motion";
+import { RoughNotation } from "react-rough-notation";
 import {
   MessageCircle,
   UsersRound,
@@ -490,16 +26,12 @@ import {
   Lock,
   Heart,
   Star,
-  Plus,
-  ArrowRight,
   Menu,
   X,
-  BadgeCheck,
   Globe,
-  Check,
-  Sparkles,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import UniversityCarousel from "@/components/landing/UniversityCarousel";
 
 /**
  * PALETTE (reference only — Tailwind needs literal hex in classNames)
@@ -508,6 +40,10 @@ import { ThemeToggle } from "@/components/theme-toggle";
  * Marigold #F0B429  sunlit amber    -> primary accent
  * Coral    #FF6B57  warm coral-red  -> secondary accent / marketplace
  * Mint     #4FD1AE  fresh teal      -> trust / verified accent
+ *
+ * NOTE: a real global.css is coming next — once it's shared these hardcoded
+ * hex values should get swapped for the actual design tokens, same as the
+ * dashboard pass.
  */
 
 const display = Bricolage_Grotesque({
@@ -524,6 +60,11 @@ const mono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-mono",
+});
+const hand = Kalam({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-hand",
 });
 
 const TYPEWRITER_PHRASES = [
@@ -595,7 +136,7 @@ const DOCS = [
 const STEPS = [
   {
     num: "1",
-    title: "Sign up with your university email",
+    title: "Sign up with your university / normal email",
     desc: "Use your institutional email address to verify your student identity. Takes under 60 seconds.",
   },
   {
@@ -683,31 +224,123 @@ function useTypewriter(words: string[], typingSpeed = 55, deletingSpeed = 30, pa
   return `${words[index].substring(0, subIndex)}${blink ? "|" : " "}`;
 }
 
-function MarkerUnderline({ className = "" }: { className?: string }) {
+/** Wraps RoughNotation so the sketch draws itself on when it scrolls into view. */
+function SketchOn({
+  children,
+  ...props
+}: {
+  children: React.ReactNode;
+  type: "underline" | "box" | "circle" | "highlight" | "strike-through" | "bracket";
+  color?: string;
+  strokeWidth?: number;
+  padding?: number | [number, number] | [number, number, number, number];
+  animationDelay?: number;
+  multiline?: boolean;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
   return (
-    <svg
-      viewBox="0 0 200 18"
-      fill="none"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-      className={`pointer-events-none absolute -bottom-1.5 left-0 w-full ${className}`}
+    <span ref={ref} className="inline-block">
+      <RoughNotation show={inView} {...props}>
+        {children}
+      </RoughNotation>
+    </span>
+  );
+}
+
+function Eyebrow({ children, rotate = -2 }: { children: React.ReactNode; rotate?: number }) {
+  return (
+    <p
+      className="handwritten mb-2 inline-block text-lg text-[#F0B429]"
+      style={{ transform: `rotate(${rotate}deg)` }}
     >
+      {children}
+    </p>
+  );
+}
+
+// function SketchArrow({ className = "" }: { className?: string }) {
+//   return (
+//     <svg viewBox="0 0 60 50" fill="none" className={className} aria-hidden="true">
+//       <path
+//         d="M6 8C22 4 38 14 46 30"
+//         stroke="currentColor"
+//         strokeWidth="2.5"
+//         strokeLinecap="round"
+//         style={{ filter: "url(#sketchy)" }}
+//       />
+//       <path
+//         d="M46 30L38 26M46 30L40 38"
+//         stroke="currentColor"
+//         strokeWidth="2.5"
+//         strokeLinecap="round"
+//         strokeLinejoin="round"
+//         style={{ filter: "url(#sketchy)" }}
+//       />
+//     </svg>
+//   );
+// }
+
+// Option A
+function SketchArrow({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 200 170" fill="none" className={className} aria-hidden="true">
       <path
-        d="M2 12C40 4 80 16 100 9C130 0 160 14 198 6"
+        d="M60 80 C110 78 160 82 188 152"
         stroke="currentColor"
-        strokeWidth="6"
+        strokeWidth="2.5" 
         strokeLinecap="round"
+        style={{ filter: "url(#sketchy)" }}
+      />
+      <path
+        d="M180 148 L166 138 M180 148 L184 132"
+        stroke="currentColor"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ filter: "url(#sketchy)" }}
       />
     </svg>
   );
 }
+
+function SketchStar({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M20 3L23.5 15.5L36 16L26 24L29.5 36L20 28.5L10.5 36L14 24L4 16L16.5 15.5Z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+        style={{ filter: "url(#sketchy)" }}
+      />
+    </svg>
+  );
+}
+
+function SketchCheck({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 40 32" fill="none" className={className} aria-hidden="true">
+      <path
+        d="M3 16L14 27L37 4"
+        stroke="currentColor"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ filter: "url(#sketchy)" }}
+      />
+    </svg>
+  );
+}
+
+const EASE_OUT_QUART: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 function fadeUp(delay = 0) {
   return {
     initial: { opacity: 0, y: 28 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-80px" },
-    transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, delay, ease: EASE_OUT_QUART },
   };
 }
 
@@ -738,6 +371,11 @@ function IdCard() {
         {/* ticket-stub notches */}
         <span className="absolute -left-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-[#EEF0E9] dark:bg-[#0E1B16]" />
         <span className="absolute -right-3 top-1/2 h-6 w-6 -translate-y-1/2 rounded-full bg-[#EEF0E9] dark:bg-[#0E1B16]" />
+
+        {/* hand-drawn grade stamp */}
+        <div className="absolute -right-4 -top-4 flex h-14 w-14 -rotate-12 items-center justify-center rounded-full border-2 border-[#FF6B57] text-[#FF6B57]">
+          <span className="handwritten text-sm font-bold">A+</span>
+        </div>
 
         <div className="mb-5 flex items-center justify-between">
           <span className="font-mono-alt text-[10px] uppercase tracking-[2px] text-[#10201A]/50 dark:text-[#F4F1E6]/50">
@@ -778,28 +416,10 @@ function IdCard() {
             ))}
           </div>
           <span className="flex items-center gap-1 rounded-full bg-[#4FD1AE]/20 px-3 py-1 text-[11px] font-semibold text-[#0E8C6C] dark:text-[#4FD1AE]">
-            <BadgeCheck size={13} />
+            <SketchCheck className="h-3 w-3" />
             Verified
           </span>
         </div>
-      </motion.div>
-
-      {/* floating sticky notes */}
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-6 -top-6 hidden rotate-6 items-center gap-1.5 rounded-xl border-2 border-[#10201A]/15 bg-[#FF6B57] px-3 py-2 text-[11px] font-semibold text-[#10201A] shadow-lg sm:flex"
-      >
-        <Sparkles size={13} />
-        You&apos;re verified!
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-        className="absolute -bottom-5 -left-6 hidden -rotate-6 items-center gap-1.5 rounded-xl border-2 border-[#10201A]/15 bg-[#F0B429] px-3 py-2 text-[11px] font-semibold text-[#10201A] shadow-lg sm:flex"
-      >
-        <Tag size={13} />
-        Tsh 12,000 · Calculus
       </motion.div>
     </div>
   );
@@ -808,14 +428,39 @@ function IdCard() {
 export default function LandingPage() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const typed = useTypewriter(TYPEWRITER_PHRASES);
+  const typedRef = useRef<HTMLParagraphElement>(null);
+  const typedInView = useInView(typedRef, { once: true });
 
   return (
     <main
-      className={`${display.variable} ${body.variable} ${mono.variable} font-body min-h-screen overflow-x-hidden bg-[#F5F1E4] text-[#10201A] dark:bg-[#0E1B16] dark:text-[#F4F1E6]`}
+      className={`${display.variable} ${body.variable} ${mono.variable} ${hand.variable} font-body min-h-screen overflow-x-hidden bg-[#F5F1E4] text-[#10201A] dark:bg-[#0E1B16] dark:text-[#F4F1E6]`}
     >
+      {/* hidden filter that gives our doodles a hand-drawn wobble */}
+      <svg width="0" height="0" className="absolute" aria-hidden="true">
+        <filter id="sketchy">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" />
+        </filter>
+      </svg>
+
       <style>{`
         .font-display { font-family: var(--font-display), sans-serif; }
         .font-mono-alt { font-family: var(--font-mono), monospace; }
+        .handwritten { font-family: var(--font-hand), cursive; }
+        .notebook-lines {
+          background-image: repeating-linear-gradient(
+            to bottom,
+            transparent, transparent 27px,
+            rgba(16,32,26,0.07) 28px
+          );
+        }
+        .dark .notebook-lines {
+          background-image: repeating-linear-gradient(
+            to bottom,
+            transparent, transparent 27px,
+            rgba(244,241,230,0.06) 28px
+          );
+        }
         @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
         .marquee-track { animation: marquee 34s linear infinite; }
         .marquee-track:hover { animation-play-state: paused; }
@@ -867,15 +512,9 @@ export default function LandingPage() {
             <ThemeToggle />
             <Link
               href="/login"
-              className="hidden rounded-lg border border-[#10201A]/15 px-4 py-1.5 text-sm text-[#10201A]/70 transition-all hover:bg-[#10201A]/5 dark:border-[#F4F1E6]/15 dark:text-[#F4F1E6]/70 dark:hover:bg-[#F4F1E6]/10 sm:inline-block"
+              className="handwritten hidden text-base text-[#10201A]/70 transition-colors hover:text-[#10201A] dark:text-[#F4F1E6]/70 dark:hover:text-[#F4F1E6] sm:inline-block"
             >
-              Sign in
-            </Link>
-            <Link
-              href="/register"
-              className="hidden rounded-lg bg-[#10201A] px-4 py-1.5 text-sm font-medium text-[#F5F1E4] transition-opacity hover:opacity-85 dark:bg-[#F0B429] dark:text-[#10201A] sm:inline-block"
-            >
-              Get started
+              sign in
             </Link>
             <button
               onClick={() => setMobileOpen((v) => !v)}
@@ -907,91 +546,97 @@ export default function LandingPage() {
                     {l.label}
                   </a>
                 ))}
-                <div className="mt-2 flex gap-2.5">
-                  <Link
-                    href="/login"
-                    className="flex-1 rounded-lg border border-[#10201A]/15 px-4 py-2 text-center text-sm dark:border-[#F4F1E6]/15"
-                  >
-                    Sign in
-                  </Link>
-                  <Link
-                    href="/register"
-                    className="flex-1 rounded-lg bg-[#10201A] px-4 py-2 text-center text-sm font-medium text-[#F5F1E4] dark:bg-[#F0B429] dark:text-[#10201A]"
-                  >
-                    Get started
-                  </Link>
-                </div>
+                <Link
+                  href="/login"
+                  className="handwritten py-1.5 text-lg text-[#10201A]/70 dark:text-[#F4F1E6]/70"
+                >
+                  sign in
+                </Link>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
-      {/* Hero */}
-      <section className="relative z-10 px-5 pb-16 pt-14 sm:px-8 sm:pt-20 lg:px-10">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+      {/* Hero — notebook page */}
+      <section className="notebook-lines relative z-10 overflow-hidden px-5 pb-16 pt-14 sm:px-8 sm:pt-20 lg:px-10">
+        <div className="pointer-events-none absolute inset-y-0 left-8 hidden w-px bg-[#FF6B57]/30 sm:block lg:left-14" />
+
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 pl-0 sm:pl-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:pl-14">
           <motion.div
             initial="hidden"
             animate="show"
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12 } } }}
           >
-            <motion.span
-              variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-dashed border-[#10201A]/25 px-3.5 py-1.5 font-mono-alt text-[11px] uppercase tracking-[1.5px] text-[#10201A]/60 dark:border-[#F4F1E6]/25 dark:text-[#F4F1E6]/55"
-            >
-              <BadgeCheck size={13} className="text-[#4FD1AE]" />
-              University-email verified
-            </motion.span>
+            <motion.div variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}>
+              <Eyebrow>roll call — verified students only</Eyebrow>
+            </motion.div>
 
             <motion.h1
               variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-              className="font-display font-extrabold leading-[0.95] tracking-tight"
+              className="relative font-display font-extrabold leading-[0.95] tracking-tight"
               style={{ fontSize: "clamp(3rem, 9vw, 6.5rem)" }}
             >
-              Campus<span className="text-[#F0B429]">Link</span>.
+              Campus
+              <SketchOn type="circle" color="#F0B429" strokeWidth={2} padding={6} animationDelay={400}>
+                <span>Link</span>
+              </SketchOn>
+              .
+              <SketchStar className="absolute -right-2 -top-6 h-8 w-8 rotate-12 text-[#FF6B57] sm:-right-8 sm:h-10 sm:w-10" />
             </motion.h1>
 
             <motion.p
               variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-              className="mt-5 min-h-[3.5em] text-xl leading-snug text-[#10201A]/75 dark:text-[#F4F1E6]/75 sm:text-2xl"
+              ref={typedRef}
+              className="mt-6 min-h-[3.5em] text-xl leading-snug text-[#10201A]/75 dark:text-[#F4F1E6]/75 sm:text-2xl"
             >
               One verified place to{" "}
-              <span className="font-mono-alt font-medium text-[#10201A] dark:text-[#F4F1E6]">
-                {typed}
-              </span>
+              <RoughNotation type="underline" show={typedInView} color="#10201A" strokeWidth={2} animationDelay={600}>
+                <span className="handwritten font-bold">{typed}</span>
+              </RoughNotation>
             </motion.p>
 
             <motion.p
               variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-              className="mt-2 max-w-md text-[15px] leading-relaxed text-[#10201A]/55 dark:text-[#F4F1E6]/55"
+              className="mt-3 max-w-md text-[15px] leading-relaxed text-[#10201A]/55 dark:text-[#F4F1E6]/55"
             >
               No fake accounts, no spam, no strangers — just your university,
               online.
             </motion.p>
 
+            {/* CTA — hand-annotated, not a button row */}
             <motion.div
               variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+              className="relative mt-12 flex flex-col items-start gap-6 sm:mt-14 sm:flex-row sm:items-end sm:gap-10"
             >
-              <Link
-                href="/register"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#10201A] px-7 py-3.5 text-sm font-semibold text-[#F5F1E4] transition-all hover:-translate-y-0.5 hover:opacity-90 dark:bg-[#F0B429] dark:text-[#10201A]"
-              >
-                <Plus size={16} />
-                Create free account
-              </Link>
-              <a
-                href="#how-it-works"
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[#10201A]/20 px-6 py-3.5 text-sm text-[#10201A]/70 transition-all hover:bg-[#10201A]/5 dark:border-[#F4F1E6]/20 dark:text-[#F4F1E6]/70 dark:hover:bg-[#F4F1E6]/10"
-              >
-                See how it works
-                <ArrowRight size={14} />
-              </a>
+              <div className="relative">
+                <span className="handwritten absolute -top-8 left-2 -rotate-6 whitespace-nowrap text-base text-[#FF6B57]">
+                  start here
+                </span>
+                <SketchArrow className="absolute -top-12 left-20 h-9 w-11 rotate-[10deg] text-[#FF6B57] sm:left-28" />
+                <SketchOn type="box" color="#F0B429" strokeWidth={2.5} padding={[12, 18]} animationDelay={900}>
+                  <Link
+                    href="/register"
+                    className="handwritten inline-block text-2xl font-bold text-[#10201A] dark:text-[#F4F1E6]"
+                  >
+                    Create free account
+                  </Link>
+                </SketchOn>
+              </div>
+
+              <SketchOn type="underline" color="#10201A" strokeWidth={2} animationDelay={1300}>
+                <a
+                  href="#how-it-works"
+                  className="handwritten text-lg text-[#10201A]/70 dark:text-[#F4F1E6]/70"
+                >
+                  or see how it works
+                </a>
+              </SketchOn>
             </motion.div>
 
             <motion.p
               variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
-              className="mt-4 text-xs text-[#10201A]/40 dark:text-[#F4F1E6]/35"
+              className="mt-6 text-xs text-[#10201A]/40 dark:text-[#F4F1E6]/35"
             >
               No credit card required. Free for all students.
             </motion.p>
@@ -1039,43 +684,48 @@ export default function LandingPage() {
 
       {/* Features */}
       <section id="features" className="relative z-10 px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
-        <div className="mx-auto mb-14 max-w-lg text-center">
-          <p className="mb-3 font-mono-alt text-[11px] uppercase tracking-[2px] text-[#F0B429]">
-            Features
-          </p>
+        <motion.div {...fadeUp()} className="mx-auto mb-14 max-w-lg text-center">
+          <Eyebrow rotate={1}>lesson plan</Eyebrow>
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
             Everything campus life needs
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-[#10201A]/55 dark:text-[#F4F1E6]/55">
             Six core tools built around how students actually live and study.
           </p>
-        </div>
+        </motion.div>
 
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map(({ icon: Icon, title, desc }, i) => (
-            <div
+            <motion.div
               key={title}
-              className="group relative rounded-2xl border-2 border-[#10201A]/12 bg-[#F5F1E4] p-6 shadow-sm transition-all hover:-translate-y-1 hover:rotate-0 hover:shadow-lg dark:border-[#F4F1E6]/12 dark:bg-[#152922]"
+              {...fadeUp((i % 3) * 0.08)}
+              className="group relative rounded-2xl border-2 border-[#10201A]/12 bg-[#F5F1E4] p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-[#F4F1E6]/12 dark:bg-[#152922]"
             >
               <span className="absolute -top-2 left-8 h-3 w-3 rounded-full bg-[#FF6B57] shadow" />
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-[#F0B429]/30 bg-[#F0B429]/15">
                 <Icon size={18} className="text-[#B8860B] dark:text-[#F0B429]" />
               </div>
-              <p className="mb-1.5 font-display text-[15px] font-bold">{title}</p>
+              <p className="mb-1.5 font-display text-[15px] font-bold">
+                {title === "Verified community" ? (
+                  <SketchOn type="box" color="#4FD1AE" strokeWidth={2} padding={4}>
+                    <span>{title}</span>
+                  </SketchOn>
+                ) : (
+                  title
+                )}
+              </p>
               <p className="text-[13px] leading-relaxed text-[#10201A]/55 dark:text-[#F4F1E6]/55">
                 {desc}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Bento */}
       <section id="community" className="relative z-10 bg-[#EEF0E9] px-5 py-20 dark:bg-[#0B1712] sm:px-8 sm:py-24 lg:px-10">
-        <div className="mx-auto mb-14 max-w-lg text-center">
-          <p className="mb-3 font-mono-alt text-[11px] uppercase tracking-[2px] text-[#F0B429]">
-            A closer look
-          </p>
+        <motion.div {...fadeUp()} className="mx-auto mb-14 max-w-lg text-center">
+          <Eyebrow rotate={-1}>field trip</Eyebrow>
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
             Designed around student life
           </h2>
@@ -1083,10 +733,11 @@ export default function LandingPage() {
             Every feature is purpose-built for the rhythms of campus — from
             exam season to the marketplace.
           </p>
-        </div>
+        </motion.div>
 
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 md:grid-cols-3 md:grid-rows-2">
-          <div
+          <motion.div
+            {...fadeUp()}
             className="rounded-2xl border-2 border-[#10201A]/12 bg-[#F5F1E4] p-6 transition-colors hover:border-[#F0B429]/50 dark:border-[#F4F1E6]/12 dark:bg-[#152922] md:col-span-2"
           >
             <MessageSquareMore size={22} className="mb-3 text-[#F0B429]" />
@@ -1114,9 +765,9 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div
+          <motion.div
             {...fadeUp(0.1)}
             className="rounded-2xl border-2 border-[#10201A]/12 bg-[#F5F1E4] p-6 transition-colors hover:border-[#F0B429]/50 dark:border-[#F4F1E6]/12 dark:bg-[#152922] md:row-span-2"
           >
@@ -1137,9 +788,9 @@ export default function LandingPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          <div
+          <motion.div
             {...fadeUp(0.15)}
             className="rounded-2xl border-2 border-[#10201A]/12 bg-[#F5F1E4] p-6 transition-colors hover:border-[#F0B429]/50 dark:border-[#F4F1E6]/12 dark:bg-[#152922]"
           >
@@ -1149,9 +800,9 @@ export default function LandingPage() {
               List what you know and what you can offer — visible to your
               whole campus.
             </p>
-          </div>
+          </motion.div>
 
-          <div
+          <motion.div
             {...fadeUp(0.2)}
             className="rounded-2xl border-2 border-[#10201A]/12 bg-[#F5F1E4] p-6 transition-colors hover:border-[#F0B429]/50 dark:border-[#F4F1E6]/12 dark:bg-[#152922]"
           >
@@ -1161,49 +812,49 @@ export default function LandingPage() {
               Textbooks, lab coats, laptops — listed by students, bought by
               students, no middleman.
             </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* How it works */}
       <section id="how-it-works" className="relative z-10 px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
-        <div className="mx-auto mb-14 max-w-lg text-center">
-          <p className="mb-3 font-mono-alt text-[11px] uppercase tracking-[2px] text-[#F0B429]">
-            How it works
-          </p>
+        <motion.div {...fadeUp()} className="mx-auto mb-14 max-w-lg text-center">
+          <Eyebrow rotate={2}>syllabus</Eyebrow>
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
             Up and running in minutes
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-[#10201A]/55 dark:text-[#F4F1E6]/55">
             Three steps is all it takes to join your campus community.
           </p>
-        </div>
+        </motion.div>
         <div className="mx-auto grid max-w-4xl grid-cols-1 gap-10 sm:grid-cols-3">
           {STEPS.map((s, i) => (
-            <div key={s.num} className="relative text-center">
+            <motion.div key={s.num} {...fadeUp(i * 0.12)} className="relative text-center">
               {i < STEPS.length - 1 && (
                 <div className="absolute left-[calc(50%+28px)] right-0 top-6 hidden h-px border-t-2 border-dashed border-[#10201A]/20 dark:border-[#F4F1E6]/20 sm:block" />
               )}
-              <div className="mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border-2 border-dashed border-[#F0B429]/60 bg-[#F0B429]/15 font-display text-lg font-bold text-[#B8860B] dark:text-[#F0B429]">
+              <div className="handwritten mx-auto mb-5 flex h-12 w-12 items-center justify-center rounded-full border-2 border-[#F0B429] text-lg font-bold text-[#B8860B] dark:text-[#F0B429]">
                 {s.num}
               </div>
               <p className="mb-2 text-[15px] font-semibold">{s.title}</p>
               <p className="text-[13px] leading-relaxed text-[#10201A]/55 dark:text-[#F4F1E6]/55">
                 {s.desc}
               </p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Testimonials */}
       <section className="relative z-10 border-t border-[#10201A]/10 bg-[#EEF0E9] px-5 py-20 dark:border-[#F4F1E6]/10 dark:bg-[#0B1712] sm:px-8 sm:py-24 lg:px-10">
-        <p {...fadeUp()} className="mb-14 text-center font-mono-alt text-[11px] uppercase tracking-[2px] text-[#F0B429]">
-          What students say
-        </p>
+        <motion.div {...fadeUp()}>
+          <Eyebrow rotate={-2}>
+            <span className="mx-auto block w-fit">notes passed in class</span>
+          </Eyebrow>
+        </motion.div>
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
-            <div
+            <motion.div
               key={t.name}
               {...fadeUp(i * 0.1)}
               style={{ rotate: i === 1 ? "0.6deg" : i === 0 ? "-1deg" : "1deg" }}
@@ -1227,17 +878,15 @@ export default function LandingPage() {
                   <p className="text-[11px] text-[#10201A]/45 dark:text-[#F4F1E6]/40">{t.role}</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* Pricing */}
       <section id="pricing" className="relative z-10 px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
-        <div {...fadeUp()} className="mx-auto mb-14 max-w-lg text-center">
-          <p className="mb-3 font-mono-alt text-[11px] uppercase tracking-[2px] text-[#F0B429]">
-            Pricing
-          </p>
+        <motion.div {...fadeUp()} className="mx-auto mb-14 max-w-lg text-center">
+          <Eyebrow rotate={1}>tuition</Eyebrow>
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
             Free. Always.
           </h2>
@@ -1245,14 +894,16 @@ export default function LandingPage() {
             CampusLink is built for students, not investors. No trials, no
             paywalls, no hidden fees.
           </p>
-        </div>
+        </motion.div>
 
-        <div {...fadeUp(0.1)} className="relative mx-auto max-w-sm">
+        <motion.div {...fadeUp(0.1)} className="relative mx-auto max-w-sm">
           <span className="absolute -left-3 top-24 h-6 w-6 rounded-full bg-[#F5F1E4] dark:bg-[#0E1B16]" />
           <span className="absolute -right-3 top-24 h-6 w-6 rounded-full bg-[#F5F1E4] dark:bg-[#0E1B16]" />
           <div className="rounded-3xl border-2 border-dashed border-[#F0B429]/50 bg-[#F5F1E4] p-8 dark:bg-[#152922]">
             <div className="mb-1 flex items-end gap-2">
-              <span className="font-display text-6xl font-extrabold">0</span>
+              <SketchOn type="circle" color="#FF6B57" strokeWidth={2.5} padding={8}>
+                <span className="font-display text-6xl font-extrabold">0</span>
+              </SketchOn>
               <span className="mb-3 text-xl text-[#10201A]/45 dark:text-[#F4F1E6]/45">/= Tsh</span>
             </div>
             <p className="mb-8 text-sm text-[#10201A]/50 dark:text-[#F4F1E6]/45">per month, forever</p>
@@ -1260,43 +911,48 @@ export default function LandingPage() {
             <div className="mb-8 flex flex-col gap-3">
               {PRICING_FEATURES.map((f) => (
                 <div key={f} className="flex items-center gap-3">
-                  <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-[#F0B429]/40 bg-[#F0B429]/20">
-                    <Check size={11} className="text-[#B8860B] dark:text-[#F0B429]" />
-                  </div>
+                  <SketchCheck className="h-4 w-4 flex-shrink-0 text-[#B8860B] dark:text-[#F0B429]" />
                   <span className="text-sm text-[#10201A]/70 dark:text-[#F4F1E6]/70">{f}</span>
                 </div>
               ))}
             </div>
 
-            <Link
-              href="/register"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#10201A] py-3.5 text-sm font-semibold text-[#F5F1E4] transition-opacity hover:opacity-85 dark:bg-[#F0B429] dark:text-[#10201A]"
-            >
-              <Plus size={16} />
-              Get started for free
-            </Link>
+            <SketchOn type="box" color="#10201A" strokeWidth={2} padding={[10, 16]}>
+              <Link
+                href="/register"
+                className="handwritten flex w-full items-center justify-center text-xl font-bold text-[#10201A] dark:text-[#F4F1E6]"
+              >
+                get started for free
+              </Link>
+            </SketchOn>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       <section className="relative z-10 px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
-        <div {...fadeUp()} className="mx-auto mb-14 max-w-lg text-center">
-          <p className="mb-3 font-mono-alt text-[11px] uppercase tracking-[2px] text-[#F0B429]">
-            Security & privacy
-          </p>
+        <motion.div {...fadeUp()} className="mx-auto mb-14 max-w-lg text-center">
+          <Eyebrow rotate={-1}>office hours</Eyebrow>
           <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
             Built for students, not advertisers
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-[#10201A]/55 dark:text-[#F4F1E6]/55">
-            CampusLink is private by default. We don’t sell your data or show
+            CampusLink is private by default. We don&rsquo;t sell your data or show
             you ads. Your campus is yours.
           </p>
-        </div>
+        </motion.div>
+      </section>
+
+      {/* University logos */}
+      <section className="relative z-10 px-5 pb-20 sm:px-8 lg:px-10">
+        <p className="mb-10 text-center font-mono-alt text-[11px] uppercase tracking-[2px] text-[#10201A]/40 dark:text-[#F4F1E6]/35">
+          50+ Universities. <Eyebrow rotate={-1}>1 platform.</Eyebrow>
+        </p>
+        <UniversityCarousel />
       </section>
 
       {/* CTA */}
-      <section className="relative z-10 px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
-        <div
+      <section className="notebook-lines relative z-10 px-5 py-20 sm:px-8 sm:py-24 lg:px-10">
+        <motion.div
           {...fadeUp()}
           className="relative mx-auto max-w-xl overflow-hidden rounded-3xl border-2 border-dashed border-[#10201A]/20 bg-[#F0B429] px-8 py-14 text-center dark:border-[#10201A]/30"
         >
@@ -1307,20 +963,20 @@ export default function LandingPage() {
             Thousands of students are already connecting, sharing, and
             building together on CampusLink. Your community is waiting.
           </p>
-          <div className="mb-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#10201A] px-7 py-3.5 text-sm font-semibold text-[#F5F1E4] transition-opacity hover:opacity-85"
-            >
-              <Plus size={16} />
-              Create free account
-            </Link>
-            <a
-              href="mailto:hello@campuslink.co.tz"
-              className="rounded-xl border border-[#10201A]/25 px-5 py-3.5 text-sm text-[#10201A]/80 transition-all hover:bg-[#10201A]/10"
-            >
-              Talk to us
-            </a>
+          <div className="mb-6 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
+            <SketchOn type="box" color="#10201A" strokeWidth={2} padding={[10, 16]}>
+              <Link href="/register" className="handwritten text-xl font-bold text-[#10201A]">
+                create free account
+              </Link>
+            </SketchOn>
+            <SketchOn type="underline" color="#10201A" strokeWidth={2}>
+              <a
+                href="mailto:hello@campuslink.co.tz"
+                className="handwritten text-lg text-[#10201A]/80"
+              >
+                or talk to us
+              </a>
+            </SketchOn>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-5">
             {[
@@ -1334,14 +990,16 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Footer */}
       <footer className="relative z-10 flex flex-col items-center justify-between gap-4 border-t border-[#10201A]/10 px-5 py-8 dark:border-[#F4F1E6]/10 sm:flex-row sm:px-8 lg:px-10">
-        <p className="font-display text-sm font-semibold text-[#10201A]/60 dark:text-[#F4F1E6]/55">
-          Campus<span className="text-[#F0B429]">Link</span>.
-        </p>
+        <Link href="/">
+          <p className="font-display text-sm font-semibold text-[#10201A]/60 dark:text-[#F4F1E6]/55">
+            Campus<span className="text-[#F0B429]">Link</span>.
+          </p>
+        </Link>
         <div className="flex gap-5">
           {["Privacy", "Terms", "Contact", "About"].map((l) => (
             <a

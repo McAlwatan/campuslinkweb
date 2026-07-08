@@ -236,6 +236,7 @@ import { Bricolage_Grotesque, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font
 import { Eye, EyeOff, Lock, Mail, User, Hash, ShieldCheck, Sparkles } from "lucide-react";
 import api from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
+import Loader1 from "@/components/landing/Loader";
 
 /**
  * Same palette as the CampusLink landing/login pages:
@@ -626,7 +627,7 @@ export default function RegisterPage() {
                 disabled={loading}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#10201A] py-3.5 text-sm font-semibold text-[#F5F1E4] transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:opacity-60 disabled:hover:translate-y-0 dark:bg-[#F0B429] dark:text-[#10201A]"
               >
-                {loading ? "Creating account…" : "Create account"}
+                {loading ? <Loader1 size={80} color="#F0B429" /> : "Create account"}
               </button>
             </form>
 
