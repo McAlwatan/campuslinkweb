@@ -12,6 +12,7 @@ import { useAuthStore } from "@/store/authStore";
 import { cn } from "@/lib/utils";
 import EmojiPicker, { EmojiClickData, Theme } from "emoji-picker-react";
 import SaveToModal from "@/components/documents/SaveToModal";
+import { useSearchParams } from "next/navigation";
 
 interface Message {
   id: string;
@@ -29,6 +30,11 @@ interface Room {
   name: string | null;
   is_group: boolean;
   created_at: string;
+  other_user?: {
+    id: string;
+    full_name: string;
+    avatar_url: string | null;
+  } | null;
 }
 
 
@@ -281,6 +287,7 @@ export default function ChatPage() {
   const audioChunksRef = useRef<Blob[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
 
   const { data: rooms, isLoading } = useQuery({
     queryKey: ["rooms"],
@@ -310,9 +317,16 @@ export default function ChatPage() {
     ws.onmessage = (e) => {
       const msg: Message = JSON.parse(e.data);
       setMessages((prev) => {
-        // replace optimistic message if exists
+        // exact id already present? nothing to do
+        if (prev.some((m) => m.id === msg.id)) return prev;
+
+        // match the still-pending optimistic bubble by id prefix, not the
+        // pending flag (which we flip early and causes a race)
         const idx = prev.findIndex(
-          (m) => m.pending && m.content === msg.content && m.sender_id === msg.sender_id
+          (m) =>
+            m.id.startsWith("pending-") &&
+            m.sender_id === msg.sender_id &&
+            m.content === msg.content
         );
         if (idx !== -1) {
           const next = [...prev];
@@ -354,6 +368,13 @@ export default function ChatPage() {
       setRoomName("");
     },
   });
+
+  useEffect(() => {
+    const targetRoomId = searchParams.get("room");
+    if (!targetRoomId || !rooms || activeRoom) return;
+    const match = rooms.find((r: Room) => r.id === targetRoomId);
+    if(match) setActiveRoom(match);
+  }, [searchParams, rooms, activeRoom])
 
   // Optimistic send text
   const sendMessage = () => {
@@ -625,12 +646,12 @@ export default function ChatPage() {
                 >
                   <div className="w-10 h-10 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                     <span className="text-primary text-xs font-bold">
-                      {(room.name ?? "DM").slice(0, 2).toUpperCase()}
+                      {room.is_group ? (room.name ?? "Group") : (room.other_user?.full_name ?? "Direct Message")}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className={cn("text-sm font-medium truncate", activeRoom?.id === room.id ? "text-primary" : "text-foreground")}>
-                      {room.name ?? "Direct Message"}
+                      {(room.is_group ? room.name : room.other_user?.full_name)?.slice(0, 2).toUpperCase() ?? "DM"}
                     </p>
                     <p className="text-xs text-muted-foreground">{room.is_group ? "Group" : "DM"}</p>
                   </div>

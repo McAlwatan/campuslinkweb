@@ -1,22 +1,38 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useState, useEffect, useRef } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
 import { toast } from "sonner";
 import { useAuthStore } from "@/store/authStore";
-import { Lock, LogOut, Moon, Sun, Bell, Shield } from "lucide-react";
+import { Lock, LogOut, Moon, Sun, Bell, Shield, User, Camera } from "lucide-react";
 
 export default function SettingsPage() {
   const logout = useAuthStore((s) => s.logout);
+  const qc = useQueryClient();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [notifications, setNotifications] = useState(true);
   const [passwords, setPasswords] = useState({
     current: "",
     newPassword: "",
     confirm: "",
   });
 
-  // Load saved theme on mount
+  const { data: profile } = useQuery({
+    queryKey: ["my-profile"],
+    queryFn: () => api.get("/users/me").then((r) => r.data),
+  });
+
+  const [headline, setHeadline] = useState("");
+  const [bio, setBio] = useState("");
+
+  useEffect(() => {
+    if (profile) {
+      setHeadline(profile.headline ?? "");
+      setBio(profile.bio ?? "");
+    }
+  }, [profile]);
+
   useEffect(() => {
     const saved = localStorage.getItem("theme") as "light" | "dark" | null;
     if (saved) {
@@ -26,11 +42,8 @@ export default function SettingsPage() {
   }, []);
 
   const applyTheme = (t: "light" | "dark") => {
-    if (t === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    if (t === "dark") document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
     localStorage.setItem("theme", t);
   };
 
@@ -40,9 +53,32 @@ export default function SettingsPage() {
     toast.success(`${t === "dark" ? "Dark" : "Light"} mode enabled`);
   };
 
+  const profileMutation = useMutation({
+    mutationFn: () => api.patch("/users/me", { headline, bio }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["my-profile"] });
+      toast.success("Profile updated");
+    },
+    onError: () => toast.error("Failed to update profile"),
+  });
+
+  const avatarMutation = useMutation({
+    mutationFn: (file: File) => {
+      const form = new FormData();
+      form.append("file", file);
+      return api.post("/users/me/avatar", form, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["my-profile"] });
+      toast.success("Profile picture updated");
+    },
+    onError: () => toast.error("Failed to upload picture"),
+  });
+
   const passwordMutation = useMutation({
-    mutationFn: () =>
-      api.patch("/users/me", { password: passwords.newPassword }),
+    mutationFn: () => api.patch("/users/me", { password: passwords.newPassword }),
     onSuccess: () => {
       toast.success("Password updated!");
       setPasswords({ current: "", newPassword: "", confirm: "" });
@@ -73,6 +109,87 @@ export default function SettingsPage() {
         <p className="text-sm text-text-secondary mt-0.5">
           Manage your account preferences
         </p>
+      </div>
+
+      {/* Profile */}
+      <div className="card p-5">
+        <div className="flex items-center gap-2.5 mb-4">
+          <div className="w-8 h-8 rounded-lg bg-primary-tint flex items-center justify-center">
+            <User size={15} className="text-primary" />
+          </div>
+          <h2 className="font-semibold text-text-primary">Profile</h2>
+        </div>
+
+        <div className="flex items-center gap-4 mb-5">
+          <div className="relative">
+            {profile?.avatar_url ? (
+              <img
+                src={profile.avatar_url}
+                alt="Avatar"
+                className="w-16 h-16 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-16 h-16 rounded-full bg-primary-tint flex items-center justify-center text-primary font-bold text-lg">
+                {profile?.full_name?.slice(0, 2).toUpperCase() ?? "U"}
+              </div>
+            )}
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-primary flex items-center justify-center border-2 border-card"
+            >
+              <Camera size={11} className="text-primary-foreground" />
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) avatarMutation.mutate(file);
+                e.target.value = "";
+              }}
+            />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-text-primary">{profile?.full_name}</p>
+            <p className="text-xs text-text-hint">{profile?.email}</p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <div>
+            <label className="text-xs font-semibold text-text-secondary uppercase tracking-wide block mb-1.5">
+              Headline
+            </label>
+            <input
+              value={headline}
+              onChange={(e) => setHeadline(e.target.value)}
+              placeholder="e.g. Computer Science student | Aspiring developer"
+              maxLength={150}
+              className="input-field w-full"
+            />
+          </div>
+          <div>
+            <label className="text-xs font-semibold text-text-secondary uppercase tracking-wide block mb-1.5">
+              Bio
+            </label>
+            <textarea
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              placeholder="Tell others a bit about yourself…"
+              rows={3}
+              className="input-field w-full resize-none"
+            />
+          </div>
+          <button
+            onClick={() => profileMutation.mutate()}
+            disabled={profileMutation.isPending}
+            className="btn-primary h-10 px-5 text-sm"
+          >
+            {profileMutation.isPending ? "Saving…" : "Save profile"}
+          </button>
+        </div>
       </div>
 
       {/* Appearance */}
@@ -107,40 +224,6 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Notifications */}
-      <div className="card p-5">
-        <div className="flex items-center gap-2.5 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-primary-tint flex items-center justify-center">
-            <Bell size={15} className="text-primary" />
-          </div>
-          <h2 className="font-semibold text-text-primary">Notifications</h2>
-        </div>
-        <div className="space-y-3">
-          {[
-            { label: "Chat messages", description: "Get notified for new messages" },
-            { label: "Group announcements", description: "When admins post in your groups" },
-            { label: "Marketplace activity", description: "When someone contacts you about a listing" },
-          ].map(({ label, description }) => (
-            <div key={label} className="flex items-center justify-between p-3 rounded-xl bg-surface">
-              <div>
-                <p className="text-sm font-medium text-text-primary">{label}</p>
-                <p className="text-xs text-text-hint">{description}</p>
-              </div>
-              <button
-                onClick={() => setNotifications(!notifications)}
-                className={`w-10 h-6 rounded-full transition-colors relative ${
-                  notifications ? "bg-primary" : "bg-border"
-                }`}
-              >
-                <span className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform ${
-                  notifications ? "translate-x-5" : "translate-x-1"
-                }`} />
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* Change password */}
       <div className="card p-5">
         <div className="flex items-center gap-2.5 mb-4">
@@ -162,9 +245,7 @@ export default function SettingsPage() {
               <input
                 type="password"
                 value={(passwords as any)[key]}
-                onChange={(e) =>
-                  setPasswords({ ...passwords, [key]: e.target.value })
-                }
+                onChange={(e) => setPasswords({ ...passwords, [key]: e.target.value })}
                 placeholder={placeholder}
                 className="input-field w-full"
               />
@@ -180,28 +261,35 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Privacy */}
-      <div className="card p-5">
-        <div className="flex items-center gap-2.5 mb-4">
+      {/* Notifications & Privacy — coming soon, honestly labelled */}
+      <div className="card p-5 opacity-70">
+        <div className="flex items-center gap-2.5 mb-2">
+          <div className="w-8 h-8 rounded-lg bg-primary-tint flex items-center justify-center">
+            <Bell size={15} className="text-primary" />
+          </div>
+          <h2 className="font-semibold text-text-primary">Notifications</h2>
+          <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-muted text-text-hint ml-auto">
+            Coming soon
+          </span>
+        </div>
+        <p className="text-xs text-text-hint">
+          Fine-grained notification controls are on the way.
+        </p>
+      </div>
+
+      <div className="card p-5 opacity-70">
+        <div className="flex items-center gap-2.5 mb-2">
           <div className="w-8 h-8 rounded-lg bg-primary-tint flex items-center justify-center">
             <Shield size={15} className="text-primary" />
           </div>
           <h2 className="font-semibold text-text-primary">Privacy</h2>
+          <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-full bg-muted text-text-hint ml-auto">
+            Coming soon
+          </span>
         </div>
-        <div className="space-y-2">
-          {[
-            "Show my profile to other students",
-            "Allow others to find me by university ID",
-            "Show my skills publicly",
-          ].map((item) => (
-            <div key={item} className="flex items-center justify-between p-3 rounded-xl bg-surface">
-              <p className="text-sm text-text-primary">{item}</p>
-              <button className="w-10 h-6 rounded-full bg-primary relative">
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-white shadow" />
-              </button>
-            </div>
-          ))}
-        </div>
+        <p className="text-xs text-text-hint">
+          Profile visibility controls are on the way.
+        </p>
       </div>
 
       {/* Account */}

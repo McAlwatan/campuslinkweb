@@ -137,6 +137,7 @@ import {
   User,
   Settings,
   FolderOpen,
+  LayoutDashboard,
   X,
 } from "lucide-react";
 import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
@@ -157,6 +158,7 @@ const mono = IBM_Plex_Mono({
 
 const navItems = [
   { label: "Home", href: "/dashboard", icon: Home },
+  { label: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
   { label: "Documents", href: "/dashboard/documents", icon: FileText },
   { label: "Chat", href: "/dashboard/chat", icon: MessageCircle },
   { label: "Groups", href: "/dashboard/groups", icon: Users },
@@ -240,6 +242,7 @@ export default function Sidebar() {
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#F0B429] to-[#FF6B57] text-xs font-bold text-[#10201A]">
             {user?.full_name?.slice(0, 2).toUpperCase() ?? "U"}
           </div>
+          
           <div className="min-w-0 flex-1">
             <p className="truncate text-xs font-semibold text-[#10201A] dark:text-[#F4F1E6]">
               {user?.full_name ?? "User"}

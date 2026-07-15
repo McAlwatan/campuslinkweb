@@ -150,6 +150,7 @@ import { Eye, EyeOff, Lock, Mail, ShieldCheck, BadgeCheck, Sparkles, Tag } from 
 import api from "@/lib/api";
 import { useAuthStore } from "@/store/authStore";
 import Loader1 from "@/components/landing/Loader";
+import GoogleSignInButton from "@/components/auth/GoolgeSignInButton";
 
 /**
  * Same palette as the CampusLink landing page:
@@ -432,9 +433,19 @@ export default function LoginPage() {
                 disabled={loading}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#10201A] py-3.5 text-sm font-semibold text-[#F5F1E4] transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:opacity-60 disabled:hover:translate-y-0 dark:bg-[#F0B429] dark:text-[#10201A]"
               >
-                {loading ? <Loader1 size={80} color="#F0B429" /> : "Sign in"}
+                {loading ? <Loader1 size={30} color="var(--color-primary)" /> : "Sign in"}
               </button>
             </form>
+
+            <div className="my-5 flex items-center gap-3">
+              <div className="h-px flex-1 bg-[#10201A]/10 dark:bg-[#F4F1E6]/10" />
+              <span className="font-mono-alt text-[10px] uppercase tracking-[1.5px] text-[#10201A]/40 dark:text-[#F4F1E6]/40">
+                or
+              </span>
+              <div className="h-px flex-1 bg-[#10201A]/10 dark:bg-[#F4F1E6]/10" />
+            </div>
+
+            <GoogleSignInButton />
 
             <div className="mt-7 text-center text-sm text-[#10201A]/55 dark:text-[#F4F1E6]/55">
               Don&apos;t have an account?{" "}

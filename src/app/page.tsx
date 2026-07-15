@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import UniversityCarousel from "@/components/landing/UniversityCarousel";
+import { Home05FreeIcons } from "@hugeicons/core-free-icons";
 
 /**
  * PALETTE (reference only — Tailwind needs literal hex in classNames)
@@ -250,12 +251,12 @@ function SketchOn({
 
 function Eyebrow({ children, rotate = -2 }: { children: React.ReactNode; rotate?: number }) {
   return (
-    <p
+    <span
       className="handwritten mb-2 inline-block text-lg text-[#F0B429]"
       style={{ transform: `rotate(${rotate}deg)` }}
     >
       {children}
-    </p>
+    </span>
   );
 }
 
@@ -668,7 +669,7 @@ export default function LandingPage() {
       </div>
 
       {/* Trust strip */}
-      <div className="relative z-10 grid grid-cols-2 gap-px border-b border-[#10201A]/10 bg-[#10201A]/10 dark:border-[#F4F1E6]/10 dark:bg-[#F4F1E6]/10 sm:grid-cols-4">
+      {/* <div className="relative z-10 grid grid-cols-2 gap-px border-b border-[#10201A]/10 bg-[#10201A]/10 dark:border-[#F4F1E6]/10 dark:bg-[#F4F1E6]/10 sm:grid-cols-4">
         {TRUST_POINTS.map(({ icon: Icon, label }) => (
           <div
             key={label}
@@ -676,6 +677,26 @@ export default function LandingPage() {
           >
             <Icon size={18} className="text-[#F0B429]" />
             <p className="text-[12.5px] leading-snug text-[#10201A]/60 dark:text-[#F4F1E6]/55">
+              {label}
+            </p>
+          </div>
+        ))}
+      </div> */}
+      <div className="relative z-10 grid grid-cols-2 gap-px border-b border-[#10201A]/10 bg-[#10201A]/10 dark:border-[#F4F1E6]/10 dark:bg-[#F4F1E6]/10 sm:grid-cols-4">
+        {TRUST_POINTS.map(({ icon: Icon, label }) => (
+          <div
+            key={label}
+            className="relative flex flex-col items-center gap-2 overflow-hidden bg-[#F5F1E4] px-4 py-8 text-center dark:bg-[#0E1B16]"
+          >
+            {/* background icon */}
+            <Icon
+              size={96}
+              strokeWidth={1}
+              className="pointer-events-none absolute -bottom-4 -right-4 text-[#10201A]/5 dark:text-[#F4F1E6]/5"
+            />
+            {/* foreground content */}
+            {/* <Icon size={18} className="relative z-10 text-[#F0B429]" /> */}
+            <p className="handwritten relative z-10 text-[12.5px] leading-snug text-[#10201A]/60 dark:text-[#F4F1E6]/55">
               {label}
             </p>
           </div>

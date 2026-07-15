@@ -627,7 +627,7 @@ export default function RegisterPage() {
                 disabled={loading}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#10201A] py-3.5 text-sm font-semibold text-[#F5F1E4] transition-all hover:-translate-y-0.5 hover:opacity-90 disabled:opacity-60 disabled:hover:translate-y-0 dark:bg-[#F0B429] dark:text-[#10201A]"
               >
-                {loading ? <Loader1 size={80} color="#F0B429" /> : "Create account"}
+                {loading ? <Loader1 size={80} color="var(--color-primary)" /> : "Create account"}
               </button>
             </form>
 

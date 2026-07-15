@@ -35,6 +35,14 @@ const COMMON_MODULES = [
   "Education", "Psychology", "Sociology", "Philosophy",
 ];
 
+const COMMON_INTERESTS = [
+  "Web Development", "Mobile Development", "AI & Machine Learning",
+  "Design", "Entrepreneurship", "Public Speaking", "Music",
+  "Sports", "Photography", "Writing", "Research", "Volunteering",
+  "Gaming", "Fashion", "Film & Media", "Debate", "Robotics",
+  "Finance & Investing", "Climate & Sustainability", "Politics",
+];
+
 export default function OnboardingModal() {
   const qc = useQueryClient();
   const [step, setStep] = useState(1);
@@ -45,6 +53,7 @@ export default function OnboardingModal() {
   const [selectedModules, setSelectedModules] = useState<string[]>([]);
   const [customModule, setCustomModule] = useState("");
   const [detectedUni, setDetectedUni] = useState<University | null>(null);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
   const { data: universities } = useQuery<University[]>({
     queryKey: ["universities"],
@@ -54,6 +63,7 @@ export default function OnboardingModal() {
   const { data: profile } = useQuery({
     queryKey: ["my-profile"],
     queryFn: () => api.get("/users/me").then((r) => r.data),
+    staleTime: 5 * 60 * 1000, //5 minutes
   });
 
   const updateProfile = useMutation({
@@ -73,6 +83,10 @@ export default function OnboardingModal() {
   },
   });
 
+  const updateInterests = useMutation({
+    mutationFn: (interests: string[]) => api.patch("/users/me/interests", { interests }), // fetch the interests from the API
+  });
+
   // Auto-detect university from university_id
   useEffect(() => {
     const uid = profile?.university_id;
@@ -88,7 +102,20 @@ export default function OnboardingModal() {
   }, [profile, universities]);
 
   // Don't show if already completed or skipped
-  if (!profile || profile.profile_completed || profile.onboarding_skipped) {
+  // if (
+  //   !profile || profile.profile_completed || profile.onboarding_skipped
+  // ) {
+  //   return null;
+  // }
+
+  // Don't show if already completed, skipped, OR has any profile data
+  if (
+    !profile ||
+    profile.profile_completed ||
+    profile.onboarding_skipped ||
+    profile.university_name ||
+    profile.course
+  ) {
     return null;
   }
 
@@ -110,6 +137,20 @@ export default function OnboardingModal() {
     setCustomModule("");
   };
 
+  // const handleSave = async () => {
+  //   try {
+  //     await updateProfile.mutateAsync({
+  //       university_name: selectedUni || undefined,
+  //       course: course || undefined,
+  //       year_of_study: year || undefined,
+  //       modules: selectedModules.length > 0 ? selectedModules : undefined,
+  //     });
+  //     toast.success("Profile saved! We'll personalise your experience.");
+  //   } catch {
+  //     toast.error("Failed to save profile");
+  //   }
+  // };
+
   const handleSave = async () => {
     try {
       await updateProfile.mutateAsync({
@@ -118,6 +159,9 @@ export default function OnboardingModal() {
         year_of_study: year || undefined,
         modules: selectedModules.length > 0 ? selectedModules : undefined,
       });
+      if (selectedInterests.length > 0) {
+        await updateInterests.mutateAsync(selectedInterests);
+      }
       toast.success("Profile saved! We'll personalise your experience.");
     } catch {
       toast.error("Failed to save profile");
@@ -126,6 +170,12 @@ export default function OnboardingModal() {
 
   const handleSkip = async () => {
     await skipOnboarding.mutateAsync();
+  };
+
+  const toggleInterest = (tag: string) => {
+    setSelectedInterests((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
   };
 
   return (
@@ -140,11 +190,13 @@ export default function OnboardingModal() {
                 {step === 1 && "Your university"}
                 {step === 2 && "Your course"}
                 {step === 3 && "Your modules"}
+                {step === 4 && "Your interests"}
               </h2>
               <p className="text-sm text-muted-foreground mt-1">
                 {step === 1 && "Tell us where you study so we can connect you with the right people"}
                 {step === 2 && "What are you studying and which year are you in?"}
                 {step === 3 && "Select modules you study — we'll recommend relevant content"}
+                {step === 4 && "What are you into? This shapes what shows up in your feed"}
               </p>
             </div>
             <button
@@ -157,7 +209,7 @@ export default function OnboardingModal() {
 
           {/* Step indicators */}
           <div className="flex items-center gap-2 mt-4">
-            {[1, 2, 3].map((s) => (
+            {[1, 2, 3, 4].map((s) => (
               <div
                 key={s}
                 className={cn(
@@ -311,7 +363,9 @@ export default function OnboardingModal() {
                     ))}
                   </div>
                 </div>
-              )}
+              )
+              
+              }
 
               <div>
                 <p className="text-xs text-muted-foreground mb-2">Common modules</p>
@@ -323,6 +377,43 @@ export default function OnboardingModal() {
                       className="px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-xs font-medium hover:bg-accent hover:text-foreground transition-colors"
                     >
                       {mod}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4 — Interests */}
+          {step === 4 && (
+            <div className="space-y-4">
+              {selectedInterests.length > 0 && (
+                <div>
+                  <p className="text-xs text-muted-foreground mb-2">Selected ({selectedInterests.length})</p>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedInterests.map((tag) => (
+                      <span
+                        key={tag}
+                        onClick={() => toggleInterest(tag)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium cursor-pointer hover:bg-primary/20 transition-colors"
+                      >
+                        {tag}
+                        <X size={11} />
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div>
+                <p className="text-xs text-muted-foreground mb-2">Pick a few</p>
+                <div className="flex flex-wrap gap-2 max-h-56 overflow-y-auto">
+                  {COMMON_INTERESTS.filter((t) => !selectedInterests.includes(t)).map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() => toggleInterest(tag)}
+                      className="px-3 py-1.5 rounded-full bg-muted text-muted-foreground text-xs font-medium hover:bg-accent hover:text-foreground transition-colors"
+                    >
+                      {tag}
                     </button>
                   ))}
                 </div>
@@ -344,7 +435,7 @@ export default function OnboardingModal() {
             <div />
           )}
 
-          {step < 3 ? (
+          {step < 4 ? (
             <button
               onClick={() => setStep((s) => s + 1)}
               className="btn-primary px-6 h-10 flex items-center gap-2 text-sm"

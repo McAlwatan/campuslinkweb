@@ -1,179 +1,13 @@
-// "use client";
-// import { useAuthStore } from "@/store/authStore";
-// import { useQuery } from "@tanstack/react-query";
-// import api from "@/lib/api";
-// import { FileText, Users, ShoppingBag, BookOpen } from "lucide-react";
-// import Link from "next/link";
-
-// export default function DashboardPage() {
-//   const user = useAuthStore((s) => s.user);
-
-//   const { data: documents } = useQuery({
-//     queryKey: ["documents"],
-//     queryFn: () => api.get("/documents").then((r) => r.data),
-//   });
-
-//   const { data: groups } = useQuery({
-//     queryKey: ["groups"],
-//     queryFn: () => api.get("/groups").then((r) => r.data),
-//   });
-
-//   const { data: listings } = useQuery({
-//     queryKey: ["listings"],
-//     queryFn: () => api.get("/marketplace/listings").then((r) => r.data),
-//   });
-
-//   const stats = [
-//     {
-//       label: "Documents",
-//       value: documents?.length ?? 0,
-//       icon: FileText,
-//       href: "/dashboard/documents",
-//       color: "bg-blue-50 text-blue-600",
-//     },
-//     {
-//       label: "Groups",
-//       value: groups?.length ?? 0,
-//       icon: Users,
-//       href: "/dashboard/groups",
-//       color: "bg-purple-50 text-purple-600",
-//     },
-//     {
-//       label: "Listings",
-//       value: listings?.length ?? 0,
-//       icon: ShoppingBag,
-//       href: "/dashboard/marketplace",
-//       color: "bg-amber-50 text-amber-600",
-//     },
-//     {
-//       label: "Courses",
-//       value: 0,
-//       icon: BookOpen,
-//       href: "/dashboard/courses",
-//       color: "bg-green-50 text-green-600",
-//     },
-//   ];
-
-//   return (
-//     <div className="space-y-6">
-//       {/* Welcome */}
-//       <div>
-//         <h1 className="text-2xl font-bold text-text-primary">
-//           Good morning, {user?.full_name?.split(" ")[0]}
-//         </h1>
-//         <p className="text-sm text-text-secondary mt-1">
-//           Here&apos;s what&apos;s happening on campus today.
-//         </p>
-//       </div>
-
-//       {/* Stats */}
-//       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-//         {stats.map(({ label, value, icon: Icon, href, color }) => (
-//           <Link
-//             key={label}
-//             href={href}
-//             className="card p-5 hover:border-primary-border transition-colors"
-//           >
-//             <div className={`w-10 h-10 rounded-xl ${color} flex items-center justify-center mb-3`}>
-//               <Icon size={18} />
-//             </div>
-//             <p className="text-2xl font-bold text-text-primary">{value}</p>
-//             <p className="text-sm text-text-secondary mt-0.5">{label}</p>
-//           </Link>
-//         ))}
-//       </div>
-
-//       {/* Recent content */}
-//       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-//         {/* Recent documents */}
-//         <div className="lg:col-span-2 card p-5">
-//           <div className="flex items-center justify-between mb-4">
-//             <h2 className="font-semibold text-text-primary">Recent Documents</h2>
-//             <Link href="/dashboard/documents" className="text-xs text-primary font-medium">
-//               See all
-//             </Link>
-//           </div>
-//           <div className="space-y-2">
-//             {documents?.slice(0, 5).map((doc: any) => (
-//               <div
-//                 key={doc.id}
-//                 className="flex items-center gap-3 p-3 rounded-xl bg-surface hover:bg-primary-tint transition-colors"
-//               >
-//                 <div className="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
-//                   <FileText size={16} className="text-red-500" />
-//                 </div>
-//                 <div className="flex-1 min-w-0">
-//                   <p className="text-sm font-medium text-text-primary truncate">
-//                     {doc.title}
-//                   </p>
-//                   <p className="text-xs text-text-hint">
-//                     {doc.course_tag ?? "No course tag"} · {doc.file_type?.toUpperCase()}
-//                   </p>
-//                 </div>
-//               </div>
-//             )) ?? (
-//               <p className="text-sm text-text-hint text-center py-6">
-//                 No documents yet.{" "}
-//                 <Link href="/dashboard/documents" className="text-primary">
-//                   Upload one
-//                 </Link>
-//               </p>
-//             )}
-//           </div>
-//         </div>
-
-//         {/* Groups */}
-//         <div className="card p-5">
-//           <div className="flex items-center justify-between mb-4">
-//             <h2 className="font-semibold text-text-primary">My Groups</h2>
-//             <Link href="/dashboard/groups" className="text-xs text-primary font-medium">
-//               See all
-//             </Link>
-//           </div>
-//           <div className="space-y-2">
-//             {groups?.slice(0, 6).map((group: any) => (
-//               <Link
-//                 key={group.id}
-//                 href={`/dashboard/groups/${group.id}`}
-//                 className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-surface transition-colors"
-//               >
-//                 <div className="w-8 h-8 rounded-lg bg-primary-tint flex items-center justify-center shrink-0">
-//                   <span className="text-primary text-xs font-bold">
-//                     {group.name.slice(0, 2).toUpperCase()}
-//                   </span>
-//                 </div>
-//                 <div className="flex-1 min-w-0">
-//                   <p className="text-sm font-medium text-text-primary truncate">
-//                     {group.name}
-//                   </p>
-//                   <p className="text-xs text-text-hint capitalize">
-//                     {group.group_type}
-//                   </p>
-//                 </div>
-//               </Link>
-//             )) ?? (
-//               <p className="text-sm text-text-hint text-center py-6">
-//                 No groups yet.
-//               </p>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
 "use client";
 
-import { useRef } from "react";
-import { useAuthStore } from "@/store/authStore";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useRef } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
-import { FileText, Users, ShoppingBag, BookOpen, ArrowUpRight } from "lucide-react";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { useAuthStore } from "@/store/authStore";
+import { toast } from "sonner";
+import { ImageIcon, X } from "lucide-react";
 import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
+import PostCard from "@/components/feed/PostCard";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -186,222 +20,133 @@ const mono = IBM_Plex_Mono({
   variable: "--font-mono",
 });
 
-const BARCODE = [3, 5, 2, 6, 4, 2, 5, 3];
-
-export default function DashboardPage() {
+export default function FeedPage() {
   const user = useAuthStore((s) => s.user);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const qc = useQueryClient();
+  const [content, setContent] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { data: documents } = useQuery({
-    queryKey: ["documents"],
-    queryFn: () => api.get("/documents").then((r) => r.data),
+  const { data: posts, isLoading } = useQuery({
+    queryKey: ["feed"],
+    queryFn: () => api.get("/posts").then((r) => r.data),
   });
 
-  const { data: groups } = useQuery({
-    queryKey: ["groups"],
-    queryFn: () => api.get("/groups").then((r) => r.data),
+  const createPost = useMutation({
+    mutationFn: async () => {
+      const form = new FormData();
+      if (content.trim()) form.append("content", content.trim());
+      if (image) form.append("image", image);
+      return api.post("/posts", form, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["feed"] });
+      setContent("");
+      setImage(null);
+      setPreview(null);
+      toast.success("Posted!");
+    },
+    onError: (err: any) => {
+      toast.error(err.response?.data?.detail ?? "Failed to post");
+    },
   });
 
-  const { data: listings } = useQuery({
-    queryKey: ["listings"],
-    queryFn: () => api.get("/marketplace/listings").then((r) => r.data),
-  });
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImage(file);
+    setPreview(URL.createObjectURL(file));
+    e.target.value = "";
+  };
 
-  const stats = [
-    {
-      label: "Documents",
-      value: documents?.length ?? 0,
-      icon: FileText,
-      href: "/dashboard/documents",
-      accent: "#F0B429",
-      rotate: -1.5,
-    },
-    {
-      label: "Groups",
-      value: groups?.length ?? 0,
-      icon: Users,
-      href: "/dashboard/groups",
-      accent: "#FF6B57",
-      rotate: 1,
-    },
-    {
-      label: "Listings",
-      value: listings?.length ?? 0,
-      icon: ShoppingBag,
-      href: "/dashboard/marketplace",
-      accent: "#4FD1AE",
-      rotate: -1,
-    },
-    {
-      label: "Courses",
-      value: 0,
-      icon: BookOpen,
-      href: "/dashboard/courses",
-      accent: "#4C9BE8",
-      rotate: 1.5,
-    },
-  ];
+  const handleSubmit = () => {
+    if (!content.trim() && !image) {
+      toast.error("Write something or add an image first");
+      return;
+    }
+    createPost.mutate();
+  };
 
   return (
-    <div className={`${display.variable} ${mono.variable} space-y-6`}>
+    <div className={`${display.variable} ${mono.variable} mx-auto max-w-2xl space-y-5`}>
       <style>{`
         .font-display { font-family: var(--font-display), sans-serif; }
         .font-mono-alt { font-family: var(--font-mono), monospace; }
       `}</style>
 
-      {/* Welcome */}
-      <div>
-        <h1 className="font-display text-2xl font-bold text-[#10201A] dark:text-[#F4F1E6]">
-          Good morning, {user?.full_name?.split(" ")[0] ?? "there"}
-        </h1>
-        <p className="mt-1 text-sm text-[#10201A]/55 dark:text-[#F4F1E6]/55">
-          Here&apos;s what&apos;s happening on campus today.
-        </p>
-      </div>
-
-      {/* Stat coupons — grab one and drag it around */}
-      <div ref={containerRef} className="relative grid grid-cols-2 gap-5 pb-2 pt-2 lg:grid-cols-4">
-        {stats.map(({ label, value, icon: Icon, href, accent, rotate }) => (
-          <motion.div
-            key={label}
-            drag
-            dragConstraints={containerRef}
-            dragElastic={0.12}
-            dragMomentum={false}
-            whileHover={{ y: -3 }}
-            whileDrag={{
-              scale: 1.06,
-              zIndex: 50,
-              boxShadow: "0 25px 45px -18px rgba(16,32,26,0.4)",
-            }}
-            style={{ rotate }}
-            className="relative cursor-grab touch-none select-none rounded-2xl border-2 border-dashed border-[#10201A]/15 bg-[#F5F1E4] p-5 shadow-sm active:cursor-grabbing dark:border-[#F4F1E6]/15 dark:bg-[#152922]"
-          >
-            {/* ticket-stub notches */}
-            <span className="absolute -left-2.5 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-[#EEF0E9] dark:bg-[#0B1712]" />
-            <span className="absolute -right-2.5 top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-[#EEF0E9] dark:bg-[#0B1712]" />
-
-            <Link
-              href={href}
-              onPointerDown={(e) => e.stopPropagation()}
-              className="absolute right-3 top-3 rounded-full border border-[#10201A]/15 p-1.5 text-[#10201A]/35 transition-colors hover:text-[#10201A] dark:border-[#F4F1E6]/15 dark:text-[#F4F1E6]/35 dark:hover:text-[#F4F1E6]"
-            >
-              <ArrowUpRight size={12} />
-            </Link>
-
-            <div
-              className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl"
-              style={{ backgroundColor: `${accent}22` }}
-            >
-              <Icon size={18} style={{ color: accent }} />
-            </div>
-            <p className="font-display text-3xl font-extrabold text-[#10201A] dark:text-[#F4F1E6]">
-              {value}
-            </p>
-            <p className="mt-0.5 text-sm text-[#10201A]/55 dark:text-[#F4F1E6]/55">{label}</p>
-
-            <div className="mt-4 flex items-end gap-1 border-t border-dashed border-[#10201A]/12 pt-3 dark:border-[#F4F1E6]/12">
-              {BARCODE.map((h, i) => (
-                <span
-                  key={i}
-                  className="w-[2px] bg-[#10201A]/25 dark:bg-[#F4F1E6]/25"
-                  style={{ height: `${h * 3}px` }}
-                />
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-      <p className="font-mono-alt -mt-2 text-[11px] text-[#10201A]/35 dark:text-[#F4F1E6]/30">
-        Tip: grab a coupon and drag it around.
-      </p>
-
-      {/* Recent content */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Recent documents */}
-        <div className="rounded-2xl border-2 border-dashed border-[#10201A]/12 bg-[#F5F1E4] p-5 dark:border-[#F4F1E6]/12 dark:bg-[#152922] lg:col-span-2">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display font-bold text-[#10201A] dark:text-[#F4F1E6]">
-              Recent Documents
-            </h2>
-            <Link
-              href="/dashboard/documents"
-              className="text-xs font-medium text-[#B8860B] dark:text-[#F0B429]"
-            >
-              See all
-            </Link>
+      {/* Composer */}
+      <div className="rounded-2xl border-2 border-dashed border-[#10201A]/12 bg-[#F5F1E4] p-4 dark:border-[#F4F1E6]/12 dark:bg-[#152922]">
+        <div className="flex gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#F0B429] to-[#FF6B57] text-xs font-bold text-[#10201A]">
+            {user?.full_name?.slice(0, 2).toUpperCase() ?? "U"}
           </div>
-          <div className="space-y-2">
-            {documents?.slice(0, 5).map((doc: any) => (
-              <div
-                key={doc.id}
-                className="flex items-center gap-3 rounded-xl bg-[#10201A]/[0.03] p-3 transition-colors hover:bg-[#F0B429]/10 dark:bg-[#F4F1E6]/[0.04]"
-              >
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#FF6B57]/15">
-                  <FileText size={16} className="text-[#FF6B57]" />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-[#10201A] dark:text-[#F4F1E6]">
-                    {doc.title}
-                  </p>
-                  <p className="font-mono-alt text-[11px] text-[#10201A]/40 dark:text-[#F4F1E6]/40">
-                    {doc.course_tag ?? "No course tag"} · {doc.file_type?.toUpperCase()}
-                  </p>
-                </div>
+          <div className="flex-1 space-y-3">
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="Share something with campus…"
+              rows={2}
+              className="w-full resize-none bg-transparent text-sm text-[#10201A] placeholder:text-[#10201A]/35 focus:outline-none dark:text-[#F4F1E6] dark:placeholder:text-[#F4F1E6]/30"
+            />
+
+            {preview && (
+              <div className="relative inline-block">
+                <img src={preview} alt="Preview" className="max-h-56 rounded-xl object-cover" />
+                <button
+                  onClick={() => { setImage(null); setPreview(null); }}
+                  className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#10201A] text-white"
+                >
+                  <X size={12} />
+                </button>
               </div>
-            )) ?? (
-              <p className="py-6 text-center text-sm text-[#10201A]/40 dark:text-[#F4F1E6]/40">
-                No documents yet.{" "}
-                <Link href="/dashboard/documents" className="text-[#B8860B] dark:text-[#F0B429]">
-                  Upload one
-                </Link>
-              </p>
             )}
-          </div>
-        </div>
 
-        {/* Groups */}
-        <div className="rounded-2xl border-2 border-dashed border-[#10201A]/12 bg-[#F5F1E4] p-5 dark:border-[#F4F1E6]/12 dark:bg-[#152922]">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display font-bold text-[#10201A] dark:text-[#F4F1E6]">
-              My Groups
-            </h2>
-            <Link
-              href="/dashboard/groups"
-              className="text-xs font-medium text-[#B8860B] dark:text-[#F0B429]"
-            >
-              See all
-            </Link>
-          </div>
-          <div className="space-y-2">
-            {groups?.slice(0, 6).map((group: any) => (
-              <Link
-                key={group.id}
-                href={`/dashboard/groups/${group.id}`}
-                className="flex items-center gap-2.5 rounded-xl p-2.5 transition-colors hover:bg-[#F0B429]/10"
+            <div className="flex items-center justify-between border-t border-dashed border-[#10201A]/10 pt-3 dark:border-[#F4F1E6]/10">
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-[#10201A]/55 transition-colors hover:bg-[#10201A]/5 dark:text-[#F4F1E6]/55 dark:hover:bg-[#F4F1E6]/8"
               >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#4FD1AE]/15">
-                  <span className="text-xs font-bold text-[#0E8C6C] dark:text-[#4FD1AE]">
-                    {group.name.slice(0, 2).toUpperCase()}
-                  </span>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium text-[#10201A] dark:text-[#F4F1E6]">
-                    {group.name}
-                  </p>
-                  <p className="text-xs capitalize text-[#10201A]/40 dark:text-[#F4F1E6]/40">
-                    {group.group_type}
-                  </p>
-                </div>
-              </Link>
-            )) ?? (
-              <p className="py-6 text-center text-sm text-[#10201A]/40 dark:text-[#F4F1E6]/40">
-                No groups yet.
-              </p>
-            )}
+                <ImageIcon size={15} className="text-[#4FD1AE]" />
+                Photo
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageSelect}
+              />
+              <button
+                onClick={handleSubmit}
+                disabled={createPost.isPending}
+                className="rounded-xl bg-[#10201A] px-5 py-2 text-xs font-semibold text-[#F5F1E4] transition-opacity hover:opacity-90 disabled:opacity-50 dark:bg-[#F0B429] dark:text-[#10201A]"
+              >
+                {createPost.isPending ? "Posting…" : "Post"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Feed list */}
+      {isLoading ? (
+        <div className="space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-40 animate-pulse rounded-2xl bg-[#10201A]/[0.04] dark:bg-[#F4F1E6]/[0.04]" />
+          ))}
+        </div>
+      ) : posts?.length ? (
+        posts.map((post: any) => <PostCard key={post.id} post={post} />)
+      ) : (
+        <div className="rounded-2xl border-2 border-dashed border-[#10201A]/12 bg-[#F5F1E4] p-10 text-center dark:border-[#F4F1E6]/12 dark:bg-[#152922]">
+          <p className="text-sm text-[#10201A]/50 dark:text-[#F4F1E6]/50">
+            No posts yet — be the first to share something.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
